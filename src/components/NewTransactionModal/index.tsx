@@ -1,5 +1,5 @@
 import Modal from 'react-modal';
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { Container, TransactionTypeContainer, TypeButton } from './styles';
 
 import closeImg from '../../assets/close.svg';
@@ -15,7 +15,14 @@ export function NewTransactionsModal({
   isNewTransacationModalOpen,
   onToggleNewTransactionModal,
 }: NewTransactionModalProps): JSX.Element {
+  const [title, setTitle] = useState('');
+  const [amount, setAmount] = useState(0);
+  const [category, setCategory] = useState('');
   const [type, setType] = useState('deposit');
+
+  function handleCreateNewTransaction(event: FormEvent) {
+    event.preventDefault();
+  }
 
   return (
     <Modal
@@ -32,16 +39,27 @@ export function NewTransactionsModal({
         <img src={closeImg} alt="Close" />
       </button>
 
-      <Container>
+      <Container onSubmit={handleCreateNewTransaction}>
         <h2>Cadastrar transação </h2>
 
-        <input type="text" placeholder="Título" />
+        <input
+          type="text"
+          placeholder="Título"
+          value={title}
+          onChange={event => setTitle(event.target.value)}
+        />
 
-        <input type="number" placeholder="Valor" />
+        <input
+          type="number"
+          placeholder="Valor"
+          value={amount}
+          onChange={event => setAmount(Number(event.target.value))}
+        />
 
         <TransactionTypeContainer>
           <TypeButton
             type="button"
+            activeColor="green"
             isActive={type === 'deposit'}
             onClick={() => {
               setType('deposit');
@@ -53,6 +71,7 @@ export function NewTransactionsModal({
 
           <TypeButton
             type="button"
+            activeColor="red"
             isActive={type === 'withdrawn'}
             onClick={() => {
               setType('withdrawn');
@@ -63,7 +82,12 @@ export function NewTransactionsModal({
           </TypeButton>
         </TransactionTypeContainer>
 
-        <input type="text" placeholder="Categoria" />
+        <input
+          type="text"
+          placeholder="Categoria"
+          value={category}
+          onChange={event => setCategory(event.target.value)}
+        />
 
         <button type="submit">Enviar</button>
       </Container>

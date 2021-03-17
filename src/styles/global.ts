@@ -18,6 +18,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    outline-color: var(--text)
   }
 
   html {
@@ -46,6 +47,10 @@ export const GlobalStyle = createGlobalStyle`
 
   button {
     cursor: pointer;
+  }
+
+  textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
+    border-color: var(--text);
   }
 
   [disabled] {

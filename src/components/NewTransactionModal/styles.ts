@@ -1,8 +1,14 @@
-import { darken } from 'polished';
+import { transparentize } from 'polished';
 import styled, { css } from 'styled-components';
 
 type TypeButtonProps = {
   isActive: boolean;
+  activeColor: 'green' | 'red';
+};
+
+const colors = {
+  green: '#12A454',
+  red: '#E62E4D',
 };
 
 export const Container = styled.form`
@@ -70,10 +76,7 @@ export const TypeButton = styled.button<TypeButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  &:hover {
-    background: ${darken(0.1, '#d7d7d7')};
-  }
+  transition: background 0.2s;
 
   img {
     width: 20px;
@@ -90,6 +93,12 @@ export const TypeButton = styled.button<TypeButtonProps>`
   ${props =>
     props.isActive &&
     css`
-      background: #ccc;
+      background: ${transparentize(0.9, colors[props.activeColor])};
+      border-color: ${colors[props.activeColor]};
     `}
+  ${props => css`
+    &:hover {
+      background: ${transparentize(0.9, colors[props.activeColor])};
+    }
+  `}
 `;
